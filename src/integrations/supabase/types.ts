@@ -18,11 +18,13 @@ export type Database = {
         Row: {
           created_at: string
           device_type: string
+          hostname: string | null
           id: string
           ip_address: string
           last_seen: string
           mac_address: string
           name: string
+          open_ports: number[]
           os: string | null
           risk_level: string
           status: string
@@ -30,11 +32,13 @@ export type Database = {
         Insert: {
           created_at?: string
           device_type: string
+          hostname?: string | null
           id?: string
           ip_address: string
           last_seen?: string
           mac_address: string
           name: string
+          open_ports?: number[]
           os?: string | null
           risk_level?: string
           status?: string
@@ -42,14 +46,46 @@ export type Database = {
         Update: {
           created_at?: string
           device_type?: string
+          hostname?: string | null
           id?: string
           ip_address?: string
           last_seen?: string
           mac_address?: string
           name?: string
+          open_ports?: number[]
           os?: string | null
           risk_level?: string
           status?: string
+        }
+        Relationships: []
+      }
+      scan_history: {
+        Row: {
+          created_at: string
+          devices_found: number
+          duration_ms: number
+          id: string
+          scan_type: string
+          status: string
+          subnet: string
+        }
+        Insert: {
+          created_at?: string
+          devices_found?: number
+          duration_ms?: number
+          id?: string
+          scan_type?: string
+          status?: string
+          subnet: string
+        }
+        Update: {
+          created_at?: string
+          devices_found?: number
+          duration_ms?: number
+          id?: string
+          scan_type?: string
+          status?: string
+          subnet?: string
         }
         Relationships: []
       }
