@@ -1,4 +1,4 @@
-import { Shield, LayoutDashboard, Bell, Network, FileText, Brain, LogOut } from "lucide-react";
+import { Shield, LayoutDashboard, Bell, Network, FileText, Brain, Globe, LogOut } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -21,6 +21,7 @@ const navItems = [
   { title: "Network Devices", url: "/network", icon: Network },
   { title: "Security Logs", url: "/logs", icon: FileText },
   { title: "Threat Analysis", url: "/threats", icon: Brain },
+  { title: "Attack Map", url: "/attack-map", icon: Globe },
 ];
 
 export function AppSidebar() {
