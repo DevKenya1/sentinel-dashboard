@@ -1,1 +1,4 @@
 project_id = "uzbeoeptwridejusmugd"
+
+[functions.scan-network]
+verify_jwt = false
