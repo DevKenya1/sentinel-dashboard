@@ -40,7 +40,7 @@ SENTINEL is a full-stack AI-powered Security Operations Center (SOC) platform th
 ### Dashboard
 > Real-time SOC dashboard with threat metrics, network activity charts, and health gauge
 
-![Dashboard](<img width="1315" height="626" alt="image" src="https://github.com/user-attachments/assets/a66cec43-06ca-42d6-b553-7ec5d974ffe4" />)
+![Dashboard](https://github.com/user-attachments/assets/a66cec43-06ca-42d6-b553-7ec5d974ffe4)
 
 ### Threat Analysis
 > AI-powered threat classification with severity assessment and mitigation steps
