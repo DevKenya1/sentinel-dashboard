@@ -1,4 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -132,6 +133,26 @@ Timestamp: ${log.created_at || "unknown"}`;
     }
 
     const analysis = JSON.parse(toolCall.function.arguments);
+
+    // Auto-create security alert for high/critical threats
+    if (analysis.severity === "critical" || analysis.severity === "high") {
+      try {
+        const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+        const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+        const sb = createClient(supabaseUrl, supabaseKey);
+
+        await sb.from("security_alerts").insert({
+          severity: analysis.severity,
+          type: analysis.threat_type.replace(/_/g, " "),
+          source_ip: log.source_ip || "unknown",
+          target: log.hostname || log.source || "unknown",
+          message: `[AI] ${analysis.explanation}`,
+          status: analysis.severity === "critical" ? "active" : "investigating",
+        });
+      } catch (alertErr) {
+        console.error("Failed to create auto-alert:", alertErr);
+      }
+    }
 
     return new Response(JSON.stringify(analysis), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
