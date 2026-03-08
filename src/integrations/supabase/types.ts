@@ -14,7 +14,141 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      network_devices: {
+        Row: {
+          created_at: string
+          device_type: string
+          id: string
+          ip_address: string
+          last_seen: string
+          mac_address: string
+          name: string
+          os: string | null
+          risk_level: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          device_type: string
+          id?: string
+          ip_address: string
+          last_seen?: string
+          mac_address: string
+          name: string
+          os?: string | null
+          risk_level?: string
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          device_type?: string
+          id?: string
+          ip_address?: string
+          last_seen?: string
+          mac_address?: string
+          name?: string
+          os?: string | null
+          risk_level?: string
+          status?: string
+        }
+        Relationships: []
+      }
+      security_alerts: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          severity: string
+          source_ip: string
+          status: string
+          target: string
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          severity: string
+          source_ip: string
+          status?: string
+          target: string
+          type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          severity?: string
+          source_ip?: string
+          status?: string
+          target?: string
+          type?: string
+        }
+        Relationships: []
+      }
+      security_logs: {
+        Row: {
+          created_at: string
+          id: string
+          log_level: string
+          message: string
+          source: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          log_level: string
+          message: string
+          source: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          log_level?: string
+          message?: string
+          source?: string
+        }
+        Relationships: []
+      }
+      threat_analysis: {
+        Row: {
+          confidence: number
+          created_at: string
+          description: string | null
+          id: string
+          iocs: string[]
+          name: string
+          origin: string
+          status: string
+          threat_type: string
+          ttps: string[]
+        }
+        Insert: {
+          confidence: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          iocs?: string[]
+          name: string
+          origin: string
+          status?: string
+          threat_type: string
+          ttps?: string[]
+        }
+        Update: {
+          confidence?: number
+          created_at?: string
+          description?: string | null
+          id?: string
+          iocs?: string[]
+          name?: string
+          origin?: string
+          status?: string
+          threat_type?: string
+          ttps?: string[]
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
