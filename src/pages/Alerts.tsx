@@ -1,17 +1,8 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, Shield, Filter } from "lucide-react";
+import { Filter } from "lucide-react";
 import { useState } from "react";
-
-const allAlerts = [
-  { id: 1, severity: "critical", type: "Intrusion", source: "192.168.1.105", target: "10.0.0.1", message: "Brute force SSH attack - 500+ failed attempts", time: "2025-03-08 14:32:01", status: "active" },
-  { id: 2, severity: "critical", type: "Malware", source: "192.168.2.41", target: "10.0.0.5", message: "Trojan signature detected in HTTP payload", time: "2025-03-08 14:28:45", status: "active" },
-  { id: 3, severity: "high", type: "Exfiltration", source: "10.0.0.23", target: "ext:45.33.32.156", message: "Suspicious outbound data transfer (4.2GB)", time: "2025-03-08 14:25:12", status: "investigating" },
-  { id: 4, severity: "high", type: "Scanning", source: "172.16.0.88", target: "10.0.0.0/24", message: "Port scanning detected across subnet", time: "2025-03-08 14:18:33", status: "active" },
-  { id: 5, severity: "medium", type: "Authentication", source: "10.0.1.15", target: "auth-server", message: "Multiple failed MFA attempts from single user", time: "2025-03-08 14:12:07", status: "resolved" },
-  { id: 6, severity: "medium", type: "Policy", source: "10.0.0.99", target: "firewall", message: "Firewall rule bypass attempt detected", time: "2025-03-08 14:05:55", status: "investigating" },
-  { id: 7, severity: "low", type: "Network", source: "10.0.1.200", target: "switch-04", message: "New device connected to monitored segment", time: "2025-03-08 13:58:22", status: "resolved" },
-  { id: 8, severity: "critical", type: "Ransomware", source: "192.168.3.12", target: "file-server-01", message: "File encryption activity detected", time: "2025-03-08 13:52:10", status: "active" },
-];
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const severityColors: Record<string, string> = {
   critical: "bg-destructive/20 text-destructive border-destructive/30",
@@ -28,6 +19,15 @@ const statusColors: Record<string, string> = {
 
 export default function Alerts() {
   const [filter, setFilter] = useState<string>("all");
+
+  const { data: allAlerts = [] } = useQuery({
+    queryKey: ["alerts"],
+    queryFn: async () => {
+      const { data } = await supabase.from("security_alerts").select("*").order("created_at", { ascending: false });
+      return data ?? [];
+    },
+  });
+
   const filtered = filter === "all" ? allAlerts : allAlerts.filter(a => a.severity === filter);
 
   return (
@@ -81,10 +81,10 @@ export default function Alerts() {
                 </td>
                 <td className="px-4 py-3 text-sm font-mono">{alert.type}</td>
                 <td className="px-4 py-3 text-xs font-mono text-muted-foreground hidden lg:table-cell">
-                  {alert.source} → {alert.target}
+                  {alert.source_ip} → {alert.target}
                 </td>
                 <td className="px-4 py-3 text-sm max-w-xs truncate">{alert.message}</td>
-                <td className="px-4 py-3 text-xs font-mono text-muted-foreground hidden md:table-cell">{alert.time}</td>
+                <td className="px-4 py-3 text-xs font-mono text-muted-foreground hidden md:table-cell">{new Date(alert.created_at).toLocaleString()}</td>
                 <td className="px-4 py-3">
                   <span className={`text-xs font-mono capitalize ${statusColors[alert.status]}`}>
                     ● {alert.status}
