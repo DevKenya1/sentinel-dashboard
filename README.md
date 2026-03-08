@@ -40,27 +40,27 @@ SENTINEL is a full-stack AI-powered Security Operations Center (SOC) platform th
 ### Dashboard
 > Real-time SOC dashboard with threat metrics, network activity charts, and health gauge
 
-![Dashboard](docs/screenshots/dashboard.png)
+![Dashboard](<img width="1315" height="626" alt="image" src="https://github.com/user-attachments/assets/a66cec43-06ca-42d6-b553-7ec5d974ffe4" />)
 
 ### Threat Analysis
 > AI-powered threat classification with severity assessment and mitigation steps
 
-![Threat Analysis](docs/screenshots/threat-analysis.png)
+![Threat Analysis](<img width="1305" height="551" alt="image" src="https://github.com/user-attachments/assets/280d6a82-0663-4802-bceb-e20aa73377be" />)
 
 ### Attack Map
 > Global attack visualization with severity-colored markers and IP drill-down
 
-![Attack Map](docs/screenshots/attack-map.png)
+![Attack Map](<img width="1310" height="633" alt="image" src="https://github.com/user-attachments/assets/dcf92786-2801-4df0-955d-5660d836583f" />)
 
 ### Security Logs
 > Searchable log monitoring with pattern detection and suspicious activity filtering
 
-![Security Logs](docs/screenshots/security-logs.png)
+![Security Logs](<img width="1308" height="592" alt="image" src="https://github.com/user-attachments/assets/e93432cd-b152-4098-ac9c-81d23820bba5" />)
 
 ### Network Devices
 > Device inventory with OS fingerprinting, open ports, and risk assessment
 
-![Network Devices](docs/screenshots/network-devices.png)
+![Network Devices](<img width="1325" height="628" alt="image" src="https://github.com/user-attachments/assets/683f672d-df9e-4b1e-956b-03e8f714633e" />)
 
 </div>
 
