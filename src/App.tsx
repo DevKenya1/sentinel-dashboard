@@ -10,6 +10,7 @@ import Alerts from "./pages/Alerts";
 import NetworkDevices from "./pages/NetworkDevices";
 import SecurityLogs from "./pages/SecurityLogs";
 import ThreatAnalysis from "./pages/ThreatAnalysis";
+import AttackMap from "./pages/AttackMap";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -36,6 +37,7 @@ function ProtectedRoutes() {
         <Route path="/network" element={<NetworkDevices />} />
         <Route path="/logs" element={<SecurityLogs />} />
         <Route path="/threats" element={<ThreatAnalysis />} />
+        <Route path="/attack-map" element={<AttackMap />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AppLayout>
