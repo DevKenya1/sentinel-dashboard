@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Globe, X, ExternalLink } from "lucide-react";
+import { Globe, X } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useState, useMemo } from "react";
