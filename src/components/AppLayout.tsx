@@ -1,8 +1,11 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
-import { Bell, Search } from "lucide-react";
+import { Bell, Search, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
+  const { user, signOut } = useAuth();
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
@@ -25,9 +28,16 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                 <Bell className="h-4 w-4 text-muted-foreground" />
                 <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-destructive animate-pulse" />
               </div>
-              <div className="h-7 w-7 rounded-full bg-primary/20 flex items-center justify-center">
-                <span className="text-[10px] font-mono text-primary font-bold">OP</span>
-              </div>
+              <span className="text-[10px] font-mono text-muted-foreground hidden sm:inline">
+                {user?.email}
+              </span>
+              <button
+                onClick={signOut}
+                className="rounded-lg p-1.5 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                title="Sign out"
+              >
+                <LogOut className="h-4 w-4" />
+              </button>
             </div>
           </header>
           <main className="flex-1 overflow-auto p-6 grid-bg relative">

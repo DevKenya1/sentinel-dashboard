@@ -1,18 +1,7 @@
 import { motion } from "framer-motion";
 import { FileText } from "lucide-react";
-
-const logs = [
-  { id: 1, timestamp: "2025-03-08 14:32:01.234", level: "ERROR", source: "firewall-01", message: "Blocked incoming connection from 192.168.1.105:4444 → 10.0.0.1:22 (SSH brute force)" },
-  { id: 2, timestamp: "2025-03-08 14:31:58.891", level: "WARN", source: "ids-sensor-03", message: "Signature match: ET TROJAN Generic RAT CnC Beacon" },
-  { id: 3, timestamp: "2025-03-08 14:31:55.102", level: "INFO", source: "auth-server", message: "User admin@corp.local authenticated via MFA (TOTP)" },
-  { id: 4, timestamp: "2025-03-08 14:31:50.445", level: "ERROR", source: "waf-proxy", message: "SQL injection attempt blocked: GET /api/users?id=1 OR 1=1" },
-  { id: 5, timestamp: "2025-03-08 14:31:48.223", level: "WARN", source: "dns-resolver", message: "DNS query to known malicious domain: evil-c2.darknet.io" },
-  { id: 6, timestamp: "2025-03-08 14:31:45.667", level: "INFO", source: "vpn-gateway", message: "New VPN tunnel established: user jdoe from 203.0.113.45" },
-  { id: 7, timestamp: "2025-03-08 14:31:42.001", level: "DEBUG", source: "ntp-server", message: "Time sync completed, drift: +0.002s" },
-  { id: 8, timestamp: "2025-03-08 14:31:38.889", level: "ERROR", source: "endpoint-agent", message: "Unauthorized process execution: powershell.exe -enc [BASE64]" },
-  { id: 9, timestamp: "2025-03-08 14:31:35.112", level: "WARN", source: "dhcp-server", message: "DHCP lease conflict: 10.0.1.200 assigned to unknown MAC" },
-  { id: 10, timestamp: "2025-03-08 14:31:30.556", level: "INFO", source: "backup-srv", message: "Incremental backup completed: 2.3GB, 0 errors" },
-];
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const levelColors: Record<string, string> = {
   ERROR: "text-destructive",
@@ -22,11 +11,20 @@ const levelColors: Record<string, string> = {
 };
 
 export default function SecurityLogs() {
+  const { data: logs = [] } = useQuery({
+    queryKey: ["security-logs"],
+    queryFn: async () => {
+      const { data } = await supabase.from("security_logs").select("*").order("created_at", { ascending: false }).limit(50);
+      return data ?? [];
+    },
+    refetchInterval: 5000,
+  });
+
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 max-w-7xl">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Security Logs</h1>
-        <p className="text-sm text-muted-foreground font-mono mt-1">Real-time log stream • Auto-refresh enabled</p>
+        <p className="text-sm text-muted-foreground font-mono mt-1">Real-time log stream • Auto-refresh every 5s</p>
       </div>
 
       <div className="rounded-lg border border-border bg-card overflow-hidden">
@@ -44,8 +42,8 @@ export default function SecurityLogs() {
               transition={{ delay: i * 0.04 }}
               className="px-4 py-2.5 hover:bg-secondary/30 transition-colors flex gap-3 items-start"
             >
-              <span className="text-muted-foreground shrink-0 w-[180px]">{log.timestamp}</span>
-              <span className={`shrink-0 w-12 font-bold ${levelColors[log.level]}`}>{log.level}</span>
+              <span className="text-muted-foreground shrink-0 w-[180px]">{new Date(log.created_at).toISOString().replace("T", " ").slice(0, 23)}</span>
+              <span className={`shrink-0 w-12 font-bold ${levelColors[log.log_level]}`}>{log.log_level}</span>
               <span className="text-primary shrink-0 w-28 truncate">{log.source}</span>
               <span className="text-foreground/80 break-all">{log.message}</span>
             </motion.div>
