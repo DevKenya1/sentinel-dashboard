@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.log-monitor]
 verify_jwt = false
+
+[functions.analyze-threat]
+verify_jwt = false
