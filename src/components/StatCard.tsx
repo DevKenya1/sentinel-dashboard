@@ -1,13 +1,14 @@
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface StatCardProps {
   title: string;
   value: string | number;
+  subtitle?: string;
   icon: ReactNode;
   trend?: string;
   trendUp?: boolean;
-  variant?: "default" | "danger" | "warning" | "success";
+  variant?: "default" | "danger" | "warning" | "success" | "info";
 }
 
 const variantStyles = {
@@ -15,6 +16,7 @@ const variantStyles = {
   danger: "border-destructive/30 hover:glow-destructive",
   warning: "border-warning/30",
   success: "border-success/30 hover:glow-accent",
+  info: "border-info/30",
 };
 
 const iconBgStyles = {
@@ -22,31 +24,42 @@ const iconBgStyles = {
   danger: "bg-destructive/10 text-destructive",
   warning: "bg-warning/10 text-warning",
   success: "bg-success/10 text-success",
+  info: "bg-info/10 text-info",
 };
 
-export function StatCard({ title, value, icon, trend, trendUp, variant = "default" }: StatCardProps) {
-  return (
-    <div className={cn(
-      "rounded-lg border bg-card p-5 transition-all duration-300",
-      variantStyles[variant]
-    )}>
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{title}</p>
-          <p className="mt-2 text-3xl font-bold font-mono text-foreground">{value}</p>
-          {trend && (
-            <p className={cn(
-              "mt-1 text-xs font-mono",
-              trendUp ? "text-destructive" : "text-success"
-            )}>
-              {trend}
-            </p>
-          )}
-        </div>
-        <div className={cn("rounded-lg p-2.5", iconBgStyles[variant])}>
-          {icon}
+export const StatCard = forwardRef<HTMLDivElement, StatCardProps>(
+  ({ title, value, subtitle, icon, trend, trendUp, variant = "default" }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "rounded-lg border bg-card p-5 transition-all duration-300",
+          variantStyles[variant]
+        )}
+      >
+        <div className="flex items-start justify-between">
+          <div>
+            <p className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{title}</p>
+            <p className="mt-2 text-3xl font-bold font-mono text-foreground">{value}</p>
+            {subtitle && (
+              <p className="mt-0.5 text-[10px] font-mono text-muted-foreground">{subtitle}</p>
+            )}
+            {trend && (
+              <p className={cn(
+                "mt-1 text-xs font-mono",
+                trendUp ? "text-destructive" : "text-success"
+              )}>
+                {trend}
+              </p>
+            )}
+          </div>
+          <div className={cn("rounded-lg p-2.5", iconBgStyles[variant])}>
+            {icon}
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+);
+
+StatCard.displayName = "StatCard";
