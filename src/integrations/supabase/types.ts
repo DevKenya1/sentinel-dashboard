@@ -125,24 +125,42 @@ export type Database = {
       security_logs: {
         Row: {
           created_at: string
+          fts: unknown
+          hostname: string | null
           id: string
+          is_suspicious: boolean
           log_level: string
           message: string
+          pattern_matched: string | null
+          raw_log: string | null
           source: string
+          source_ip: string | null
         }
         Insert: {
           created_at?: string
+          fts?: unknown
+          hostname?: string | null
           id?: string
+          is_suspicious?: boolean
           log_level: string
           message: string
+          pattern_matched?: string | null
+          raw_log?: string | null
           source: string
+          source_ip?: string | null
         }
         Update: {
           created_at?: string
+          fts?: unknown
+          hostname?: string | null
           id?: string
+          is_suspicious?: boolean
           log_level?: string
           message?: string
+          pattern_matched?: string | null
+          raw_log?: string | null
           source?: string
+          source_ip?: string | null
         }
         Relationships: []
       }
