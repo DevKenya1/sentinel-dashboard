@@ -2,7 +2,9 @@
 
 # 🛡️ SENTINEL — AI Security Operations Platform
 
-**Enterprise-grade cybersecurity operations platform powered by artificial intelligence**
+# Description
+
+SENTINEL is an AI-powered Security Operations Center (SOC) platform that enables real-time threat detection, intelligent log analysis, network monitoring, and automated security alerting through a modern, scalable, and enterprise-ready cybersecurity dashboard.
 
 [![Built with Lovable](https://img.shields.io/badge/Built%20with-Lovable-ff69b4?style=flat-square)](https://lovable.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
